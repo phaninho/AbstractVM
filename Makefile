@@ -6,7 +6,7 @@
 #    By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/27 18:56:34 by stmartin          #+#    #+#              #
-#    Updated: 2018/04/06 17:13:21 by stmartin         ###   ########.fr        #
+#    Updated: 2018/04/07 14:01:47 by stmartin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ INC_PATH = ./inc/
 
 SRC_NAME = main.cpp
 OBJ_NAME = $(SRC_NAME:.cpp=.o)
-NAME = mutantstack
+NAME = avm
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
