@@ -6,12 +6,11 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/09 18:09:51 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/09 19:23:40 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Vm.hpp"
-#include <iostream>
 
 Vm::Vm( void )
 { }
@@ -43,4 +42,23 @@ void	Vm::run()
 		else if (action == "ok")
 			std::cout << "ca marche" << std::endl;
 	}
+}
+
+
+void	Vm::run(char *av)
+{
+	std::ifstream file;
+
+		if (!file)
+			throw std::invalid_argument("File empty !");
+		else
+		{
+			std::string s;
+			file.open(av);
+			if (file.fail())
+				throw std::runtime_error("File open failed !");
+			while (file >> s)
+				std::cout << s << std::endl;
+			file.close();
+		}
 }
