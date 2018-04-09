@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/08 04:22:01 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/09 01:31:58 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ public:
 
 	virtual int getPrecision( void ) const; // Precision of the type of the instance
 	virtual eOperandType getType( void ) const; // Type of the instance
+	
 	virtual IOperand const * operator+( IOperand const & rhs ) const; // Sum
 	virtual IOperand const * operator-( IOperand const & rhs ) const; // Difference
 	virtual IOperand const * operator*( IOperand const & rhs ) const; // Product

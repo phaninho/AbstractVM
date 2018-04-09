@@ -6,14 +6,23 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 13:55:09 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/07 15:24:22 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/09 01:30:24 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef IOPERAND_HPP
 #define IOPERAND_HPP
 
-class IOperand {
+enum 	eOperandType
+{
+	Int8,
+	Int16,
+	Int32,
+	Float,
+	Double
+};
+
+class 	IOperand {
 
 public:
 	virtual int getPrecision( void ) const = 0;
