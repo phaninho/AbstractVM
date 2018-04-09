@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 13:55:09 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/09 01:30:24 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/09 14:26:41 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 
 enum 	eOperandType
 {
-	Int8,
-	Int16,
-	Int32,
-	Float,
-	Double
+	Int8, 	//int8_t
+	Int16,	//int16_t
+	Int32,	//int32_t
+	Float,	//float
+	Double	//double
 };
 
 class 	IOperand {

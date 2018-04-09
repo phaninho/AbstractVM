@@ -6,12 +6,14 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/09 11:55:58 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/09 13:48:21 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef OPERAND_HPP
 #define OPERAND_HPP
+
+#include <iostream>
 
 template <typename T>
 class Operand : public IOperand {
@@ -23,16 +25,16 @@ public:
 
 	}
 
-	Operand( Operand const & )
+	Operand( Operand const & src)
 	{
-
+		*this = src;
 	}
 
 	virtual ~Operand( void )
 	{
 
 	}
-	
+
 
 	virtual int getPrecision( void ) const // Precision of the type of the instance
 	{
