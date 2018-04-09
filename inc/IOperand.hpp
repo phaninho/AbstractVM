@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 13:55:09 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/09 14:26:41 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/09 17:26:32 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,9 @@ public:
   // Type of the instance
 
  	virtual std::string const & toString( void ) const = 0; // String representation of the instance
+
 	virtual ~IOperand( void ) {}
+	
 };
 
 #endif
