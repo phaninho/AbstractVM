@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:27:18 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/11 01:02:20 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,14 @@
 #include "IOperand.hpp"
 #include "Factory.hpp"
 
+
+// template <typename T>
+
 class Operand : public IOperand {
 
 public:
+
+	Operand();
 
 	Operand(std::string const &value, eOperandType type, const Factory* factory):
 	_type(type),
@@ -29,22 +34,14 @@ public:
 		std::cout << "on creer operand " << value << " a une valeur type de " << _type << std::endl;
 	}
 
-	Operand( Operand const & src)
-	{
-		*this = src;
-	}
+	Operand( Operand const & src);
 
 	~Operand( void )
 	{
 		std::cout << "on detruit operand " << _type << std::endl;
 	}
 
-	Operand &        operator=( Operand const & rhs )
-	{
-		if (this != &rhs)
-			*this = rhs;
-		return *this;
-	}
+	Operand &        operator=( Operand const & rhs );
 
 
 	// virtual int getPrecision( void ) const; // Precision of the type of the instance

@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 20:50:04 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 00:23:30 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/11 01:01:04 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ Factory::Factory(Factory const & src)
 }
 
 Factory::~Factory()
-{
-
-}
+{ }
 
 Factory		&Factory::operator=(Factory const & rhs)
 {
