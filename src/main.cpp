@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 13:46:32 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/10 19:21:29 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/10 23:21:27 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int		main(int ac, char **av)
 	Map map = vm.createMap();
 
 // pour trouver le constructeur a appeler
-	if (map.find("Int16") != map.end())
-		std::cout << map.at("Int16") << std::endl;
+	// if (map.find("Int16") != map.end())
+	// 	std::cout << map.at("Int16") << std::endl;
 	try
 	{
 		if (ac > 2)

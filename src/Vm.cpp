@@ -6,14 +6,15 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/10 19:19:00 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/10 23:19:03 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Vm.hpp"
+#include "IOperand.hpp"
+#include "Factory.hpp"
 
-Vm::Vm( void ):
-_end(0)
+Vm::Vm( void ): _end(0), _factory(new Factory)
 { }
 
 Vm::Vm( Vm const & src )
@@ -24,7 +25,7 @@ Vm::Vm( Vm const & src )
 Vm::~Vm()
 { }
 
-Vm 				&Vm::operator=( Vm const & rhs )
+Vm 			&Vm::operator=( Vm const & rhs )
 {
 	if (this != &rhs)
 		*this = rhs;
@@ -45,7 +46,7 @@ void	Vm::run()
 }
 
 
-void				Vm::run(char *av)
+void		Vm::run(char *av)
 {
 	std::ifstream file;
 	std::string buf;
@@ -75,7 +76,7 @@ const std::map<std::string, int> 	Vm::createMap()
 	return m;
 }
 
-void						Vm::read_args(std::string buf)
+void		Vm::read_args(std::string buf)
 {
 	size_t pos;
 
@@ -87,12 +88,45 @@ void						Vm::read_args(std::string buf)
 		check_operand(buf, PUSH, 3);
 }
 
-void						Vm::check_operand(std::string const &buf, eAsmArgs n, size_t start)
+void		Vm::check_operand(std::string const &buf, eAsmArgs n, size_t start)
 {
 	size_t pos;
 
-	if (n == 0 && (pos = buf.find(" ")) == start + 1)
-		std::cout << pos << std::endl;
+	if (n == 0 && (pos = buf.find(" ", start)) == start + 1)
+		chooseType(buf, pos + 1);
 	else if (n == 0 && pos != start + 1)
 		throw std::runtime_error("Wrong instruction format !");
+}
+
+void		Vm::chooseType(std::string const & buf, size_t start)
+{
+	size_t pos;
+
+	if ((pos = buf.find("Int8", start)) == start)
+	{
+		_type = Int8;
+		_value = "Int8";
+	}
+	else if ((pos = buf.find("Int16", start)) == start)
+	{
+		_type = Int16;
+		_value = "Int16";
+	}
+	else if ((pos = buf.find("Int32", start)) == start)
+	{
+		_type = Int32;
+		_value = "Int32";
+	}
+	else if ((pos = buf.find("Float", start)) == start)
+	{
+		_type = Float;
+		_value = "Float";
+	}
+	else if ((pos = buf.find("Double", start)) == start)
+	{
+		_type = Double;
+		_value = "Double";
+	}
+	_factory->createOperand(_type, _value);
+	// std::cout << "type " << _type << " " << start << std::endl;
 }

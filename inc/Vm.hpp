@@ -6,17 +6,15 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/10 19:11:03 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/10 21:46:42 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VM_HPP
 # define VM_HPP
 
-#include <iostream>
 #include <fstream>
-#include <string>
-#include <map>
+#include "Factory.hpp"
 
 enum eAsmArgs
 {
@@ -48,10 +46,13 @@ public:
 	const std::map<std::string, int>	createMap();
 	void								read_args(std::string av);
 	void								check_operand(std::string const & buf, eAsmArgs n, size_t pos);
-
+	void								chooseType(std::string const & buf, size_t t);
 private:
 
 	bool								_end;
+	eOperandType						_type;
+	std::string							_value;
+	Factory								*_factory;
 };
 
 
