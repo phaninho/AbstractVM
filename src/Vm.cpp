@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/09 20:13:44 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/10 07:03:42 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,17 @@ Vm 				&Vm::operator=( Vm const & rhs )
 
 void	Vm::run()
 {
-	std::string action;
-	int out = 0;
+	std::string buf;
+	int end = 0;
 
-    while (!out)
+    while (!end)
     {
-    	if (!std::getline(std::cin, action))
+    	if (!std::getline(std::cin, buf))
     		break;
-		else if (action == "ok")
+		else if (buf == "ok")
 			std::cout << "ca marche" << std::endl;
+		else if (buf == "exit")
+			end = 1;
 	}
 }
 
@@ -48,19 +50,19 @@ void	Vm::run()
 void				Vm::run(char *av)
 {
 	std::ifstream file;
+	std::string buf;
 
-		if (!file)
-			throw std::invalid_argument("File empty !");
-		else
-		{
-			std::string s;
-			file.open(av);
-			if (file.fail())
-				throw std::runtime_error("File open failed !");
-			while (file >> s)
-				std::cout << s << std::endl;
-			file.close();
-		}
+	file.open(av);
+	if (!file)
+		throw std::invalid_argument("Wrong file name !");
+	else if (file.is_open() == false)
+		throw std::runtime_error("File open failed !");
+	while (file.eof() == false)
+	{
+			std::getline(file, buf);
+			std::cout << buf << std::endl;
+	}
+	file.close();
 }
 
 const std::map<std::string, int> 	Vm::createMap()
