@@ -6,13 +6,14 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/10 07:03:42 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/10 19:19:00 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "Vm.hpp"
 
-Vm::Vm( void )
+Vm::Vm( void ):
+_end(0)
 { }
 
 Vm::Vm( Vm const & src )
@@ -33,16 +34,13 @@ Vm 				&Vm::operator=( Vm const & rhs )
 void	Vm::run()
 {
 	std::string buf;
-	int end = 0;
+	// int end = 0;
 
-    while (!end)
+    while (!_end)
     {
     	if (!std::getline(std::cin, buf))
     		break;
-		else if (buf == "ok")
-			std::cout << "ca marche" << std::endl;
-		else if (buf == "exit")
-			end = 1;
+		read_args(buf);
 	}
 }
 
@@ -75,4 +73,26 @@ const std::map<std::string, int> 	Vm::createMap()
 	m["Float"] = 4;
 	m["Double"] = 5;
 	return m;
+}
+
+void						Vm::read_args(std::string buf)
+{
+	size_t pos;
+
+	if ((pos = buf.find(";;")) == 0)
+		_end = 1;
+	else if ((pos = buf.find(";")) == 0)
+		;
+	else if ((pos = buf.find("push")) == 0)
+		check_operand(buf, PUSH, 3);
+}
+
+void						Vm::check_operand(std::string const &buf, eAsmArgs n, size_t start)
+{
+	size_t pos;
+
+	if (n == 0 && (pos = buf.find(" ")) == start + 1)
+		std::cout << pos << std::endl;
+	else if (n == 0 && pos != start + 1)
+		throw std::runtime_error("Wrong instruction format !");
 }
