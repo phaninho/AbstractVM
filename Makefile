@@ -6,7 +6,7 @@
 #    By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/27 18:56:34 by stmartin          #+#    #+#              #
-#    Updated: 2018/04/11 00:21:00 by stmartin         ###   ########.fr        #
+#    Updated: 2018/04/11 15:22:54 by stmartin         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ SRC_PATH = ./src/
 OBJ_PATH = ./obj/
 INC_PATH = ./inc/
 
-SRC_NAME = main.cpp Vm.cpp Factory.cpp
+SRC_NAME = main.cpp Vm.cpp Factory.cpp Exception.cpp
 OBJ_NAME = $(SRC_NAME:.cpp=.o)
 NAME = avm
 

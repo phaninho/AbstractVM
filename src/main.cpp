@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 13:46:32 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 14:14:04 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/11 15:15:37 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ int		main(int ac, char **av)
 		std::cout << e.what() << std::endl;
 	}
 	catch (std::runtime_error & e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	catch (std::exception & e)
 	{
 		std::cout << e.what() << std::endl;
 	}
