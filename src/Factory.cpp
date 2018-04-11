@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 20:50:04 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 01:01:04 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/11 13:09:56 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ IOperand const * Factory::createOperand( eOperandType type, std::string const & 
 
 IOperand const * Factory::createInt8( std::string const & value ) const
 {
-		return (new Operand(value, Int8, this));
+		return (new Operand<char>(value, Int8, this));
 }
 
 // IOperand const * Factory::createInt16( std::string const & value ) const

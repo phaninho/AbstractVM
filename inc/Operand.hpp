@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 01:02:20 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/11 13:09:05 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "Factory.hpp"
 
 
-// template <typename T>
+template <typename T>
 
 class Operand : public IOperand {
 
