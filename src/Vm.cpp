@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 16:51:30 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/11 17:33:48 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void		Vm::read_args(std::string buf)
 		;
 	else if ((pos = buf.find("push")) == 0)
 		check_operand(buf, PUSH, 3);
+	else
+		throw std::invalid_argument("Invalid Argument !");
 }
 
 void		Vm::check_operand(std::string const &buf, eAsmArgs n, size_t start)
@@ -154,7 +156,7 @@ void		Vm::check_bracket(std::string const & buf, size_t start)
 					checkInteger(nb);
 				else
 					checkDecimal(nb);
-				// castNb(nb);
+				castAndStackNb(nb);
 				// std::cout << "nb = " << nb << std::endl;
 		}
 		// std::cout << buf.find(")", start) << std::endl;
@@ -175,4 +177,52 @@ void		Vm::checkDecimal(std::string const &value)
 	if (value == "+" || value == "-" || value == "+." || value == "-." || value == "."
 	|| !std::regex_match(value, std::regex("^[+\\-]?(?:|0|[1-9]\\d*)(?:\\.\\d*)?(?:[eE][+\\-]?\\d+)?$")))
 		throw LexicalSyntacticException("Syntactic exception (Value is not a decimal number)");
+}
+
+void		Vm::castAndStackNb(std::string const & nb)
+{
+	int min;
+	int max;
+
+	if (_type == Int8)
+	{
+		min = std::numeric_limits<char>::min();
+    	max = std::numeric_limits<char>::max();
+		int int8 = std::stoi(nb);
+		if (int8 < min || int8 > max)
+			throw std::overflow_error("Value is not a Int8 !");
+	}
+	else if (_type == Int16)
+	{
+		min = std::numeric_limits<short int>::min();
+    	max = std::numeric_limits<short int>::max();
+		int int16 = std::stoi(nb);
+		if (int16 < min || int16 > max)
+			throw std::overflow_error("Value is not a Int16 !");
+	}
+	else if (_type == Int32)
+	{
+		min = std::numeric_limits<int>::min();
+    	max = std::numeric_limits<int>::max();
+		int int32 = std::stoi(nb);
+		if (int32 < min || int32 > max)
+			throw std::overflow_error("Value is not a Int32 !");
+	}
+	else if (_type == Float)
+	{
+		float minf = std::numeric_limits<float>::min();
+    	float maxf = std::numeric_limits<float>::max();
+		float flt = std::stof(nb);
+		if (flt < minf || flt > maxf)
+			throw std::overflow_error("Value is not a Float !");
+	}
+	else if (_type == Double)
+	{
+		double mind = std::numeric_limits<double>::min();
+    	double maxd = std::numeric_limits<double>::max();
+		double dbl = std::stod(nb);
+		if (dbl < mind || dbl > maxd)
+			throw std::overflow_error("Value is not a Double !");
+	}
+		// std::cout << "ready to cast " << nb << std::endl;
 }

@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 16:02:07 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/11 17:11:34 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <fstream>
 #include <regex>
+#include <limits>
 #include "Factory.hpp"
 #include "Exception.hpp"
 
@@ -52,6 +53,7 @@ public:
 	void								check_bracket(std::string const &, size_t start);
 	void								checkInteger(std::string const &value);
 	void								checkDecimal(std::string const &value);
+	void								castAndStackNb(std::string const & nb);
 
 private:
 
