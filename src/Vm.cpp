@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/10 23:19:03 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/11 14:22:16 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,9 @@ void		Vm::chooseType(std::string const & buf, size_t start)
 {
 	size_t pos;
 
-	if ((pos = buf.find("Int8", start)) == start)
+	if ((pos = buf.find("\0", start)) == start)
+		throw std::runtime_error("Wrong instruction format !");
+	else if ((pos = buf.find("Int8", start)) == start)
 	{
 		_type = Int8;
 		_value = "Int8";
@@ -128,5 +130,4 @@ void		Vm::chooseType(std::string const & buf, size_t start)
 		_value = "Double";
 	}
 	_factory->createOperand(_type, _value);
-	// std::cout << "type " << _type << " " << start << std::endl;
 }

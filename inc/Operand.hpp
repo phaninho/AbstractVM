@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 13:09:05 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/11 14:15:30 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ public:
 
 	Operand(std::string const &value, eOperandType type, const Factory* factory):
 	_type(type),
-	_Factory(factory)
+	_factory(factory)
 	{
-		(void)_Factory;
+		(void)_factory;
 		std::cout << "on creer operand " << value << " a une valeur type de " << _type << std::endl;
 	}
 
@@ -58,7 +58,7 @@ public:
 private:
 
 	eOperandType		_type;
-	const Factory		*_Factory;
+	const Factory		*_factory;
 };
 
 #endif

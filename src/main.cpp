@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 13:46:32 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/10 23:21:27 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/11 14:14:04 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,14 @@ int		main(int ac, char **av)
 	Vm vm;
 	Map map = vm.createMap();
 
-// pour trouver le constructeur a appeler
-	// if (map.find("Int16") != map.end())
-	// 	std::cout << map.at("Int16") << std::endl;
 	try
 	{
 		if (ac > 2)
 			throw std::invalid_argument("Too many arguments !");
 		else if (ac == 1)
 			vm.run();
-			//start reading standart input
 		else if (ac == 2)
 			vm.run(av[1]);
-			//start reading file
 	}
 	catch (std::invalid_argument & e)
 	{
