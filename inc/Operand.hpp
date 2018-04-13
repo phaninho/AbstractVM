@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 12:18:43 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:47:42 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,13 @@ public:
 
 	Operand();
 
-	Operand(std::string const &value, eOperandType type, const Factory* factory, T const & nb):
+	Operand(std::string const &value, eOperandType type, /*const Factory* factory,*/ T const & nb, std::string str):
 	_type(type),
-	_factory(factory),
-	_nb(nb)
+	// _factory(factory),
+	_nb(nb),
+	_str(str)
 	{
-		(void)_factory;
+		// (void)_factory;
 		std::cout << "on creer operand " << value << " a une valeur type de " << _type << " nb = " << nb << std::endl;
 	}
 
@@ -59,21 +60,24 @@ public:
 	{
 		return _type;
 	}
-    //
+
 	// virtual IOperand const * operator+( IOperand const & rhs ) const; // Sum
 	// virtual IOperand const * operator-( IOperand const & rhs ) const; // Difference
 	// virtual IOperand const * operator*( IOperand const & rhs ) const; // Product
 	// virtual IOperand const * operator/( IOperand const & rhs ) const; // Quotient
 	// virtual IOperand const * operator%( IOperand const & rhs ) const; // Modulo
-    //
- 	// virtual std::string const & toString( void ) const; // String representation of the instance
+
+	virtual std::string const & toString( void ) const // String representation of the instance
+	{
+		return _str;
+	}
 
 private:
 
 	eOperandType		_type;
-	const Factory		*_factory;
+	// const Factory		*_factory;
 	T					_nb;
-	// std::stack<T> stk;
+	std::string			_str;
 };
 
 #endif

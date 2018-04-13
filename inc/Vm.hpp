@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 11:46:07 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:21:11 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ public:
 	void								check_bracket(std::string const &, size_t start);
 	void								checkInteger(std::string const &value);
 	void								checkDecimal(std::string const &value);
-	void								castAndStackNb(std::string const & nb);
+	void								castValue(std::string const & nb);
 
 private:
 
@@ -60,6 +60,7 @@ private:
 	eOperandType						_type;
 	std::string							_value;
 	Factory								*_factory;
+	std::vector<IOperand const *>		_stack;
 
 };
 

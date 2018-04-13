@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 11:31:36 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:59:46 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,7 +156,7 @@ void		Vm::check_bracket(std::string const & buf, size_t start)
 					checkInteger(nb);
 				else
 					checkDecimal(nb);
-				castAndStackNb(nb);
+				castValue(nb);
 		}
 	}
 }
@@ -175,31 +175,33 @@ void		Vm::checkDecimal(std::string const &value)
 		throw LexicalSyntacticException("Syntactic exception (Value is not a decimal number)");
 }
 
-void		Vm::castAndStackNb(std::string const & nb)
+void		Vm::castValue(std::string const & nb)
 {
 	if (_type == Int8)
 	{
 		_value = nb;
-		_factory->createOperand(_type, _value);
+		_stack.push_back(_factory->createOperand(_type, _value));
 	}
 	else if (_type == Int16)
 	{
 		_value = nb;
-		_factory->createOperand(_type, _value);
+		_stack.push_back(_factory->createOperand(_type, _value));
 	}
 	else if (_type == Int32)
 	{
 		_value = nb;
-		_factory->createOperand(_type, _value);
+		_stack.push_back(_factory->createOperand(_type, _value));
 	}
 	else if (_type == Float)
 	{
 		_value = nb;
-		_factory->createOperand(_type, _value);
+		_stack.push_back(_factory->createOperand(_type, _value));
 	}
 	else if (_type == Double)
 	{
 		_value = nb;
-		_factory->createOperand(_type, _value);
+		_stack.push_back(_factory->createOperand(_type, _value));
 	}
+	// for (std::vector<const IOperand *>::iterator it = _stack.begin() ; it != _stack.end(); ++it)
+    // 	std::cout << ' ' << (*it)->toString() << std::endl;
 }

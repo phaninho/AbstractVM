@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 20:50:04 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 13:33:18 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 14:56:53 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ IOperand const * Factory::createInt8( std::string const & value ) const
 	int int8 = std::stoi(value);
 	if (int8 < min || int8 > max)
 		throw std::overflow_error("Value is not a Int8 !");
-	// std::cout << "int8 " << int8 << std::endl;
-	return (new Operand<short int>(value, Int8, this, int8));
+	return (new Operand<short int>(value, Int8, /*this,*/ int8, value));
 }
 
 IOperand const * Factory::createInt16( std::string const & value ) const
@@ -62,7 +61,7 @@ IOperand const * Factory::createInt16( std::string const & value ) const
 	int int16 = std::stoi(value);
 	if (int16 < min || int16 > max)
 		throw std::overflow_error("Value is not a Int16 !");
-	return (new Operand<short int>(value, Int8, this, int16));
+	return (new Operand<short int>(value, Int16, /*this,*/ int16, value));
 }
 
 IOperand const * Factory::createInt32( std::string const & value ) const
@@ -72,7 +71,7 @@ IOperand const * Factory::createInt32( std::string const & value ) const
 	int int32 = std::stoi(value);
 	if (int32 < min || int32 > max)
 		throw std::overflow_error("Value is not a Int32 !");
-	return (new Operand<int>(value, Int8, this, int32));
+	return (new Operand<int>(value, Int32, /*this,*/ int32, value));
 }
 
 IOperand const * Factory::createFloat( std::string const & value ) const
@@ -82,7 +81,7 @@ IOperand const * Factory::createFloat( std::string const & value ) const
 	float flt = std::stof(value);
 	if (flt < minf || flt > maxf)
 		throw std::overflow_error("Value is not a Float !");
-	return (new Operand<float>(value, Int8, this, flt));
+	return (new Operand<float>(value, Float, /*this,*/ flt, value));
 }
 
 IOperand const * Factory::createDouble( std::string const & value ) const
@@ -92,5 +91,5 @@ IOperand const * Factory::createDouble( std::string const & value ) const
 	double dbl = std::stod(value);
 	if (dbl < mind || dbl > maxd)
 		throw std::overflow_error("Value is not a Double !");
-	return (new Operand<double>(value, Int8, this, dbl));
+	return (new Operand<double>(value, Double, /*this,*/ dbl, value));
 }
