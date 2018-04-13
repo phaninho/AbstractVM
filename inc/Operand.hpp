@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 14:47:42 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 18:11:07 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <stack>
+#include <sstream>
 #include "IOperand.hpp"
 #include "Factory.hpp"
 
@@ -27,14 +28,14 @@ public:
 
 	Operand();
 
-	Operand(std::string const &value, eOperandType type, /*const Factory* factory,*/ T const & nb, std::string str):
+	Operand(std::string const &value, eOperandType type, /*const Factory* factory,*/ T const & nb):
 	_type(type),
 	// _factory(factory),
 	_nb(nb),
-	_str(str)
+	_str(value)
 	{
 		// (void)_factory;
-		std::cout << "on creer operand " << value << " a une valeur type de " << _type << " nb = " << nb << std::endl;
+		// std::cout << "on creer operand " << value << " a une valeur type de " << _type << " nb = " << nb << std::endl;
 	}
 
 	Operand( Operand const & src);
@@ -61,7 +62,26 @@ public:
 		return _type;
 	}
 
-	// virtual IOperand const * operator+( IOperand const & rhs ) const; // Sum
+	virtual IOperand const * operator+( IOperand const & rhs ) const // Sum
+	{
+		double left = this->_nb;
+		double right = std::stod(rhs.toString());
+		std::stringstream	ss;
+
+		if (this->_type == Int8)
+		{
+			if (left + right > std::numeric_limits<char>::max() || left + right < std::numeric_limits<char>::min())
+				throw std::runtime_error("Int8 overflow !");
+			else
+			{
+				ss << left + right;
+				return new Operand<short>(ss.str() , Int8, left + right);
+			}
+		}
+		// std::cout << "lft " << left << " rgt " << right << std::endl;
+		return (this);
+	}
+
 	// virtual IOperand const * operator-( IOperand const & rhs ) const; // Difference
 	// virtual IOperand const * operator*( IOperand const & rhs ) const; // Product
 	// virtual IOperand const * operator/( IOperand const & rhs ) const; // Quotient

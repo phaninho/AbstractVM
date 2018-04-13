@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 14:21:11 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 16:26:49 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,14 @@ public:
 	void								run(char *av);
 	const std::map<std::string, int>	createMap();
 	void								read_args(std::string av);
+	void								check_stack();
 	void								check_operand(std::string const & buf, eAsmArgs n, size_t pos);
 	void								chooseType(std::string const & buf, size_t t);
 	void								check_bracket(std::string const &, size_t start);
 	void								checkInteger(std::string const &value);
 	void								checkDecimal(std::string const &value);
 	void								castValue(std::string const & nb);
-
+	void								add();
 private:
 
 	bool								_end;

@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 14:59:46 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 18:16:50 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,16 +77,27 @@ const std::map<std::string, int> 	Vm::createMap()
 
 void		Vm::read_args(std::string buf)
 {
-	size_t pos;
-
-	if ((pos = buf.find(";;")) == 0)
+	if (buf.find(";;") == 0)
 		_end = 1;
-	else if ((pos = buf.find(";")) == 0)
+	else if (buf.find(";") == 0)
 		;
-	else if ((pos = buf.find("push")) == 0)
+	else if (buf.find("push") == 0)
 		check_operand(buf, PUSH, 3);
+	else if (buf.find("add") == 0)
+	{
+		check_stack();
+		add();
+	}
 	else
 		throw std::invalid_argument("Invalid Argument !");
+}
+
+void		Vm::check_stack()
+{
+	if (_stack.empty())
+		throw std::runtime_error("Stack is empty !");
+	// for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
+
 }
 
 void		Vm::check_operand(std::string const &buf, eAsmArgs n, size_t start)
@@ -202,6 +213,24 @@ void		Vm::castValue(std::string const & nb)
 		_value = nb;
 		_stack.push_back(_factory->createOperand(_type, _value));
 	}
-	// for (std::vector<const IOperand *>::iterator it = _stack.begin() ; it != _stack.end(); ++it)
-    // 	std::cout << ' ' << (*it)->toString() << std::endl;
+	// for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
+    // 	// std::cout << ' ' << (*it)->toString() << std::endl;
+}
+
+void		Vm::add()
+{
+	IOperand const 		*left, *right, *rsl;
+
+	right = *(_stack.rbegin());
+	left = *(_stack.rbegin() + 1);
+	// std::cout << right->toString() << " " << left->toString() << std::endl;
+	rsl = *left + *right;
+	_stack.pop_back();
+	_stack.pop_back();
+	std::cout << "ok add"  << std::endl;
+	_stack.push_back(rsl);
+	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
+		std::cout << ' ' << (*it)->toString() << std::endl;
+	// _stack.push_back()
+
 }
