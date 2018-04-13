@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 18:16:50 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 18:24:27 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,14 +223,12 @@ void		Vm::add()
 
 	right = *(_stack.rbegin());
 	left = *(_stack.rbegin() + 1);
-	// std::cout << right->toString() << " " << left->toString() << std::endl;
 	rsl = *left + *right;
 	_stack.pop_back();
 	_stack.pop_back();
-	std::cout << "ok add"  << std::endl;
 	_stack.push_back(rsl);
 	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
-		std::cout << ' ' << (*it)->toString() << std::endl;
+		std::cout << "debug display: " << (*it)->toString() << std::endl;
 	// _stack.push_back()
 
 }
