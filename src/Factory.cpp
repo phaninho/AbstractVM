@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 20:50:04 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 14:21:59 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 12:09:16 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,25 +46,51 @@ IOperand const * Factory::createOperand( eOperandType type, std::string const & 
 
 IOperand const * Factory::createInt8( std::string const & value ) const
 {
-		return (new Operand<char>(value, Int8, this));
+	int min = std::numeric_limits<char>::min();
+	int max = std::numeric_limits<char>::max();
+	int int8 = std::stoi(value);
+	if (int8 < min || int8 > max)
+		throw std::overflow_error("Value is not a Int8 !");
+	// std::cout << "int8 " << int8 << std::endl;
+	return (new Operand<char>(value, Int8, this, int8));
 }
 
 IOperand const * Factory::createInt16( std::string const & value ) const
 {
-		return (new Operand<short int>(value, Int8, this));
+	int min = std::numeric_limits<short int>::min();
+	int max = std::numeric_limits<short int>::max();
+	int int16 = std::stoi(value);
+	if (int16 < min || int16 > max)
+		throw std::overflow_error("Value is not a Int16 !");
+	return (new Operand<short int>(value, Int8, this, int16));
 }
 
 IOperand const * Factory::createInt32( std::string const & value ) const
 {
-		return (new Operand<int>(value, Int8, this));
+	int min = std::numeric_limits<int>::min();
+	int max = std::numeric_limits<int>::max();
+	int int32 = std::stoi(value);
+	if (int32 < min || int32 > max)
+		throw std::overflow_error("Value is not a Int32 !");
+	return (new Operand<int>(value, Int8, this, int32));
 }
 
 IOperand const * Factory::createFloat( std::string const & value ) const
 {
-		return (new Operand<float>(value, Int8, this));
+	float minf = std::numeric_limits<float>::min();
+	float maxf = std::numeric_limits<float>::max();
+	float flt = std::stof(value);
+	if (flt < minf || flt > maxf)
+		throw std::overflow_error("Value is not a Float !");
+	return (new Operand<float>(value, Int8, this, flt));
 }
 
 IOperand const * Factory::createDouble( std::string const & value ) const
 {
-		return (new Operand<double>(value, Int8, this));
+	double mind = std::numeric_limits<double>::min();
+	double maxd = std::numeric_limits<double>::max();
+	double dbl = std::stod(value);
+	if (dbl < mind || dbl > maxd)
+		throw std::overflow_error("Value is not a Double !");
+	return (new Operand<double>(value, Int8, this, dbl));
 }

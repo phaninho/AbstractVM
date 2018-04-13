@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 01:46:26 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 14:20:16 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 11:32:05 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define FACTORY_HPP
 
 #include "IOperand.hpp"
+#include <limits>
 
 class Factory {
 

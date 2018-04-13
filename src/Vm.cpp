@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 17:33:48 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 11:31:36 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,12 +157,8 @@ void		Vm::check_bracket(std::string const & buf, size_t start)
 				else
 					checkDecimal(nb);
 				castAndStackNb(nb);
-				// std::cout << "nb = " << nb << std::endl;
 		}
-		// std::cout << buf.find(")", start) << std::endl;
 	}
-	// _factory->createOperand(_type, _value);
-
 }
 
 void		Vm::checkInteger(std::string const &value)
@@ -181,48 +177,29 @@ void		Vm::checkDecimal(std::string const &value)
 
 void		Vm::castAndStackNb(std::string const & nb)
 {
-	int min;
-	int max;
-
 	if (_type == Int8)
 	{
-		min = std::numeric_limits<char>::min();
-    	max = std::numeric_limits<char>::max();
-		int int8 = std::stoi(nb);
-		if (int8 < min || int8 > max)
-			throw std::overflow_error("Value is not a Int8 !");
+		_value = nb;
+		_factory->createOperand(_type, _value);
 	}
 	else if (_type == Int16)
 	{
-		min = std::numeric_limits<short int>::min();
-    	max = std::numeric_limits<short int>::max();
-		int int16 = std::stoi(nb);
-		if (int16 < min || int16 > max)
-			throw std::overflow_error("Value is not a Int16 !");
+		_value = nb;
+		_factory->createOperand(_type, _value);
 	}
 	else if (_type == Int32)
 	{
-		min = std::numeric_limits<int>::min();
-    	max = std::numeric_limits<int>::max();
-		int int32 = std::stoi(nb);
-		if (int32 < min || int32 > max)
-			throw std::overflow_error("Value is not a Int32 !");
+		_value = nb;
+		_factory->createOperand(_type, _value);
 	}
 	else if (_type == Float)
 	{
-		float minf = std::numeric_limits<float>::min();
-    	float maxf = std::numeric_limits<float>::max();
-		float flt = std::stof(nb);
-		if (flt < minf || flt > maxf)
-			throw std::overflow_error("Value is not a Float !");
+		_value = nb;
+		_factory->createOperand(_type, _value);
 	}
 	else if (_type == Double)
 	{
-		double mind = std::numeric_limits<double>::min();
-    	double maxd = std::numeric_limits<double>::max();
-		double dbl = std::stod(nb);
-		if (dbl < mind || dbl > maxd)
-			throw std::overflow_error("Value is not a Double !");
+		_value = nb;
+		_factory->createOperand(_type, _value);
 	}
-		// std::cout << "ready to cast " << nb << std::endl;
 }

@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/11 14:15:30 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 12:06:52 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define OPERAND_HPP
 
 #include <iostream>
+#include <stack>
 #include "IOperand.hpp"
 #include "Factory.hpp"
 
@@ -26,26 +27,38 @@ public:
 
 	Operand();
 
-	Operand(std::string const &value, eOperandType type, const Factory* factory):
+	Operand(std::string const &value, eOperandType type, const Factory* factory, T const & nb):
 	_type(type),
-	_factory(factory)
+	_factory(factory),
+	_nb(nb)
 	{
 		(void)_factory;
-		std::cout << "on creer operand " << value << " a une valeur type de " << _type << std::endl;
+		std::cout << "on creer operand " << value << " a une valeur type de " << _type << " nb = " << nb << std::endl;
 	}
 
 	Operand( Operand const & src);
 
 	~Operand( void )
-	{
-		std::cout << "on detruit operand " << _type << std::endl;
-	}
+	{ }
 
 	Operand &        operator=( Operand const & rhs );
 
 
-	// virtual int getPrecision( void ) const; // Precision of the type of the instance
-	// virtual eOperandType getType( void ) const; // Type of the instance
+	virtual int getPrecision( void ) const // Precision of the type of the instance
+	{
+		int precision = 0;
+
+		if (_type == Float)
+			precision = 2;
+		else if (_type == Double)
+			precision = 7;
+		return precision;
+	}
+
+	virtual eOperandType getType( void ) const // Type of the instance
+	{
+		return _type;
+	}
     //
 	// virtual IOperand const * operator+( IOperand const & rhs ) const; // Sum
 	// virtual IOperand const * operator-( IOperand const & rhs ) const; // Difference
@@ -59,6 +72,8 @@ private:
 
 	eOperandType		_type;
 	const Factory		*_factory;
+	T					_nb;
+	// std::stack<T> stk;
 };
 
 #endif
