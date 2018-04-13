@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 20:18:18 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 20:26:44 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,69 +74,11 @@ public:
 		std::stringstream	ss;
 		void (Operand::*fc)(double left, double right) const;
 		eOperandType type = _type >= rhs.getType() ? _type : rhs.getType();
-		// if (this->_type >= rhs.getType())
-		// {
-			fc = limit.at(type);
-			(*this.*fc)(left, right);
-			ss << left + right;
-			return _factory->createOperand(type, ss.str());
-		// }
-		// else
-		// {
-		// 	fc = limit.at(rhs.getType());
-		// 	(*this.*fc)(left, right);
-		// }
-		// if (this->_type == Int8)
-		// {
-		// 	if (left + right > std::numeric_limits<char>::max() || left + right < std::numeric_limits<char>::min())
-		// 		throw std::runtime_error("Int8 overflow !");
-		// 	else
-		// 	{
-				// ss << left + right;
-				// return new Operand<short>(ss.str() , type, left + right);
-		// 	}
-		// }
-		// else if (this->_type == Int16)
-		// {
-		// 	if (left + right > std::numeric_limits<short int>::max() || left + right < std::numeric_limits<short int>::min())
-		// 		throw std::runtime_error("Int16 overflow !");
-		// 	else
-		// 	{
-		// 		ss << left + right;
-		// 		return new Operand<short>(ss.str() , Int16, left + right);
-		// 	}
-		// }
-		// else if (this->_type == Int32)
-		// {
-		// 	if (left + right > std::numeric_limits<int>::max() || left + right < std::numeric_limits<int>::min())
-		// 		throw std::runtime_error("Int32 overflow !");
-		// 	else
-		// 	{
-		// 		ss << left + right;
-		// 		return new Operand<int>(ss.str() , Int32, left + right);
-		// 	}
-		// }
-		// else if (this->_type == Float)
-		// {
-		// 	if (left + right > std::numeric_limits<float>::max() || left + right < std::numeric_limits<float>::min())
-		// 		throw std::runtime_error("float overflow !");
-		// 	else
-		// 	{
-		// 		ss << left + right;
-		// 		return new Operand<float>(ss.str() , Float, left + right);
-		// 	}
-		// }
-		// else if (this->_type == Double)
-		// {
-		// 	if (left + right > std::numeric_limits<double>::max() || left + right < std::numeric_limits<double>::min())
-		// 		throw std::runtime_error("double overflow !");
-		// 	else
-		// 	{
-		// 		ss << left + right;
-		// 		return new Operand<double>(ss.str() , Double, left + right);
-		// 	}
-		// }
-		// throw std::runtime_error("Wrong Type");
+
+		fc = limit.at(type);
+		(*this.*fc)(left, right);
+		ss << left + right;
+		return _factory->createOperand(type, ss.str());
 	}
 
 
