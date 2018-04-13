@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 20:50:04 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 12:09:16 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/13 13:33:18 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ IOperand const * Factory::createInt8( std::string const & value ) const
 	if (int8 < min || int8 > max)
 		throw std::overflow_error("Value is not a Int8 !");
 	// std::cout << "int8 " << int8 << std::endl;
-	return (new Operand<char>(value, Int8, this, int8));
+	return (new Operand<short int>(value, Int8, this, int8));
 }
 
 IOperand const * Factory::createInt16( std::string const & value ) const
