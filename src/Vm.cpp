@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 19:58:32 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 20:05:03 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void		Vm::read_args(std::string buf)
 		_asmArg = ASSERT;
 		check_operand(buf, 5);
 	}
+	else if (buf.find("dump") == 0)
+		dump_stack();
 	else if (buf.find("add") == 0)
 	{
 		check_stack();
@@ -340,4 +342,15 @@ void		Vm::mod()
 	_stack.push_back(rsl);
 	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
 		std::cout << "debug display: " << (*it)->toString() << std::endl;
+}
+
+void		Vm::dump_stack()
+{
+	if (_stack.size() < 1)
+		throw std::runtime_error("Can't dump, Stack is empty");
+	else
+	{
+		for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
+			std::cout << (*it)->toString() << std::endl;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 19:38:53 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 20:02:37 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ public:
 	void								mul();
 	void								divi();
 	void								mod();
+	void								dump_stack();
 
 private:
 
