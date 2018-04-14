@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 20:26:44 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 15:43:38 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,7 @@ public:
 
 	virtual int getPrecision( void ) const // Precision of the type of the instance
 	{
-		int precision = 0;
-
-		if (_type == Float)
-			precision = 2;
-		else if (_type == Double)
-			precision = 7;
-		return precision;
+		return _type;
 	}
 
 	virtual eOperandType getType( void ) const // Type of the instance
@@ -71,21 +65,91 @@ public:
 	{
 		double left = this->_nb;
 		double right = std::stod(rhs.toString());
+		double rsl;
 		std::stringstream	ss;
-		void (Operand::*fc)(double left, double right) const;
+		void (Operand::*fc)(double rsl) const;
 		eOperandType type = _type >= rhs.getType() ? _type : rhs.getType();
 
+		rsl = left + right;
 		fc = limit.at(type);
-		(*this.*fc)(left, right);
+		(*this.*fc)(rsl);
 		ss << left + right;
 		return _factory->createOperand(type, ss.str());
 	}
 
+	virtual IOperand const * operator-( IOperand const & rhs ) const // Difference
+	{
+		double left = this->_nb;
+		double right = std::stod(rhs.toString());
+		double rsl;
+		std::stringstream	ss;
+		void (Operand::*fc)(double rsl) const;
+		eOperandType type = _type >= rhs.getType() ? _type : rhs.getType();
 
-	// virtual IOperand const * operator-( IOperand const & rhs ) const; // Difference
-	// virtual IOperand const * operator*( IOperand const & rhs ) const; // Product
-	// virtual IOperand const * operator/( IOperand const & rhs ) const; // Quotient
-	// virtual IOperand const * operator%( IOperand const & rhs ) const; // Modulo
+		rsl = left - right;
+		fc = limit.at(type);
+		(*this.*fc)(rsl);
+		ss << right - left;
+		return _factory->createOperand(type, ss.str());
+	}
+
+	virtual IOperand const * operator*( IOperand const & rhs ) const // Product
+	{
+		double left = this->_nb;
+		double right = std::stod(rhs.toString());
+		double rsl;
+		std::stringstream	ss;
+		void (Operand::*fc)(double rsl) const;
+		eOperandType type = _type >= rhs.getType() ? _type : rhs.getType();
+
+		rsl = left * right;
+		fc = limit.at(type);
+		(*this.*fc)(rsl);
+		ss << left * right;
+		return _factory->createOperand(type, ss.str());
+	}
+
+	virtual IOperand const * operator/( IOperand const & rhs ) const // Quotient
+	{
+		double left = this->_nb;
+		double right = std::stod(rhs.toString());
+		double rsl;
+		std::stringstream	ss;
+		void (Operand::*fc)(double rsl) const;
+		eOperandType type = _type >= rhs.getType() ? _type : rhs.getType();
+
+		if (right == 0)
+			throw std::runtime_error("Division by 0 not possible !");
+		rsl = left / right;
+		fc = limit.at(type);
+		(*this.*fc)(rsl);
+		ss << right / left;
+		return _factory->createOperand(type, ss.str());
+	}
+
+	virtual IOperand const * operator%( IOperand const & rhs ) const // Modulo
+	{
+		int left = this->_nb;
+		int right = std::stod(rhs.toString());
+		int rsl;
+		std::stringstream	ss;
+		eOperandType type = _type >= rhs.getType() ? _type : rhs.getType();
+
+		if (right == 0)
+			throw std::runtime_error("Division by 0 not possible !");
+		else if (_type == Float || rhs.getType() == Float || _type == Double || rhs.getType() == Double )
+			throw std::runtime_error("Modulo use an invalid type !");
+
+		rsl = right % left;
+		if (rsl > std::numeric_limits<char>::max() || rsl < std::numeric_limits<char>::min())
+			throw std::runtime_error("Int8 overflow !");
+		else if (rsl > std::numeric_limits<short int>::max() || rsl < std::numeric_limits<short int>::min())
+			throw std::runtime_error("Int16 overflow !");
+		else if (rsl > std::numeric_limits<int>::max() || rsl < std::numeric_limits<int>::min())
+			throw std::runtime_error("Int32 overflow !");
+		ss << left % right;
+		return _factory->createOperand(type, ss.str());
+	}
 
 	virtual std::string const & toString( void ) const // String representation of the instance
 	{
@@ -96,33 +160,33 @@ public:
 	//////////	check limits ///////////////////
 
 
-	void	limitInt8(double left, double right) const
+	void	limitInt8(double rsl) const
 	{
-		if (left + right > std::numeric_limits<char>::max() || left + right < std::numeric_limits<char>::min())
+		if (rsl > std::numeric_limits<char>::max() || rsl < std::numeric_limits<char>::min())
 			throw std::runtime_error("Int8 overflow !");
 	}
 
-	void	limitInt16(double left, double right) const
+	void	limitInt16(double rsl) const
 	{
-		if (left + right > std::numeric_limits<short int>::max() || left + right < std::numeric_limits<short int>::min())
+		if (rsl > std::numeric_limits<short int>::max() || rsl < std::numeric_limits<short int>::min())
 			throw std::runtime_error("Int16 overflow !");
 	}
 
-	void	limitInt32(double left, double right) const
+	void	limitInt32(double rsl) const
 	{
-		if (left + right > std::numeric_limits<int>::max() || left + right < std::numeric_limits<int>::min())
+		if (rsl > std::numeric_limits<int>::max() || rsl < std::numeric_limits<int>::min())
 			throw std::runtime_error("Int32 overflow !");
 	}
 
-	void	limitFloat(double left, double right) const
+	void	limitFloat(double rsl) const
 	{
-		if (left + right > std::numeric_limits<float>::max() || left + right < std::numeric_limits<float>::min())
+		if (rsl > std::numeric_limits<float>::max() || rsl < std::numeric_limits<float>::min())
 			throw std::runtime_error("Float overflow !");
 	}
 
-	void	limitDouble(double left, double right) const
+	void	limitDouble(double rsl) const
 	{
-		if (left + right > std::numeric_limits<double>::max() || left + right < std::numeric_limits<double>::min())
+		if (rsl > std::numeric_limits<double>::max() || rsl < std::numeric_limits<double>::min())
 			throw std::runtime_error("Double overflow !");
 	}
 private:
@@ -131,7 +195,7 @@ private:
 	const Factory		*_factory;
 	T					_nb;
 	std::string			_str;
-	std::map<eOperandType, void (Operand::*)(double, double) const> limit;
+	std::map<eOperandType, void (Operand::*)(double) const> limit;
 
 };
 

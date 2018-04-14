@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 16:26:49 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 15:30:55 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,11 @@ public:
 	void								checkDecimal(std::string const &value);
 	void								castValue(std::string const & nb);
 	void								add();
+	void								sub();
+	void								mul();
+	void								div();
+	void								mod();
+
 private:
 
 	bool								_end;

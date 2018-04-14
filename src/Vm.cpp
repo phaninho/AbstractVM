@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 18:24:27 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 15:41:46 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ const std::map<std::string, int> 	Vm::createMap()
 
 void		Vm::read_args(std::string buf)
 {
+    // revoir la ligne des commentaires et pour le exit
 	if (buf.find(";;") == 0)
 		_end = 1;
 	else if (buf.find(";") == 0)
@@ -87,6 +88,26 @@ void		Vm::read_args(std::string buf)
 	{
 		check_stack();
 		add();
+	}
+	else if(buf.find("sub") == 0)
+	{
+		check_stack();
+		sub();
+	}
+	else if(buf.find("mul") == 0)
+	{
+		check_stack();
+		mul();
+	}
+	else if(buf.find("div") == 0)
+	{
+		check_stack();
+		div();
+	}
+	else if(buf.find("mod") == 0)
+	{
+		check_stack();
+		mod();
 	}
 	else
 		throw std::invalid_argument("Invalid Argument !");
@@ -113,31 +134,31 @@ void		Vm::check_operand(std::string const &buf, eAsmArgs n, size_t start)
 void		Vm::chooseType(std::string const & buf, size_t start)
 {
 
-	if (buf.find("Int8", start) == start)
+	if (buf.find("int8", start) == start)
 	{
 		_type = Int8;
 		_value = "Int8";
 		start += 4;
 	}
-	else if (buf.find("Int16", start) == start)
+	else if (buf.find("int16", start) == start)
 	{
 		_type = Int16;
 		_value = "Int16";
 		start += 5;
 	}
-	else if (buf.find("Int32", start) == start)
+	else if (buf.find("int32", start) == start)
 	{
 		_type = Int32;
 		_value = "Int32";
 		start += 5;
 	}
-	else if (buf.find("Float", start) == start)
+	else if (buf.find("float", start) == start)
 	{
 		_type = Float;
 		_value = "Float";
 		start += 5;
 	}
-	else if (buf.find("Double", start) == start)
+	else if (buf.find("double", start) == start)
 	{
 		_type = Double;
 		_value = "Double";
@@ -229,6 +250,60 @@ void		Vm::add()
 	_stack.push_back(rsl);
 	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
 		std::cout << "debug display: " << (*it)->toString() << std::endl;
-	// _stack.push_back()
+}
 
+void		Vm::sub()
+{
+	IOperand const 		*left, *right, *rsl;
+
+	right = *(_stack.rbegin());
+	left = *(_stack.rbegin() + 1);
+	rsl = *left - *right;
+	_stack.pop_back();
+	_stack.pop_back();
+	_stack.push_back(rsl);
+	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
+		std::cout << "debug display: " << (*it)->toString() << std::endl;
+}
+
+void		Vm::mul()
+{
+	IOperand const 		*left, *right, *rsl;
+
+	right = *(_stack.rbegin());
+	left = *(_stack.rbegin() + 1);
+	rsl = *left * *right;
+	_stack.pop_back();
+	_stack.pop_back();
+	_stack.push_back(rsl);
+	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
+		std::cout << "debug display: " << (*it)->toString() << std::endl;
+}
+
+void		Vm::div()
+{
+	IOperand const 		*left, *right, *rsl;
+
+	right = *(_stack.rbegin());
+	left = *(_stack.rbegin() + 1);
+	rsl = *left / *right;
+	_stack.pop_back();
+	_stack.pop_back();
+	_stack.push_back(rsl);
+	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
+		std::cout << "debug display: " << (*it)->toString() << std::endl;
+}
+
+void		Vm::mod()
+{
+	IOperand const 		*left, *right, *rsl;
+
+	right = *(_stack.rbegin());
+	left = *(_stack.rbegin() + 1);
+	rsl = *left % *right;
+	_stack.pop_back();
+	_stack.pop_back();
+	_stack.push_back(rsl);
+	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
+		std::cout << "debug display: " << (*it)->toString() << std::endl;
 }
