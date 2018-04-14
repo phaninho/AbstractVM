@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 20:05:03 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/15 01:21:30 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 Vm::Vm( void ):
 _end(0),
 _factory(new Factory),
-_dump(0),
 _exit(0)
 {
 	(void)_exit;
@@ -48,6 +47,8 @@ void	Vm::run()
     		break;
 		read_args(buf);
 	}
+	if (_end && !_exit)
+		throw std::runtime_error("error : Program stop before exit");
 }
 
 
@@ -83,55 +84,54 @@ const std::map<std::string, int> 	Vm::createMap()
 
 void		Vm::read_args(std::string buf)
 {
-    // revoir la ligne des commentaires et pour le exit
 	if (buf.find(";;") == 0)
 		_end = 1;
-	else if (buf.find("push") == 0)
+	else if (!_exit && buf.find("push") == 0)
 	{
 		_asmArg = PUSH;
 		check_operand(buf, 3);
 	}
-	else if (buf.find("assert") == 0)
+	else if (!_exit && buf.find("assert") == 0)
 	{
 		_asmArg = ASSERT;
 		check_operand(buf, 5);
 	}
-	else if (buf.find("dump") == 0)
+	else if (!_exit && buf.find("dump") == 0)
 		dump_stack();
-	else if (buf.find("add") == 0)
+	else if (!_exit && buf.find("add") == 0)
 	{
 		check_stack();
 		add();
 	}
-	else if (buf.find("sub") == 0)
+	else if (!_exit && buf.find("sub") == 0)
 	{
 		check_stack();
 		sub();
 	}
-	else if (buf.find("mul") == 0)
+	else if (!_exit && buf.find("mul") == 0)
 	{
 		check_stack();
 		mul();
 	}
-	else if(buf.find("div") == 0)
+	else if(!_exit && buf.find("div") == 0)
 	{
 		check_stack();
 		divi();
 	}
-	else if (buf.find("mod") == 0)
+	else if (!_exit && buf.find("mod") == 0)
 	{
 		check_stack();
 		mod();
 	}
-	else if (buf.find("pop") == 0)
+	else if (!_exit && buf.find("pop") == 0)
 	{
 		check_stack();
 		_stack.pop_back();
 	}
-	else if (buf.find("dump") == 0)
-		_dump = 1;
-	else if (buf.find("print") == 0)
+	else if (!_exit && buf.find("print") == 0)
 		check_for_print();
+	else if (buf.find("exit") == 0)
+		_exit = 1;
 	else if (buf.find(";"))
 		;
 	else

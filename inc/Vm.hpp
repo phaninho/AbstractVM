@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 20:02:37 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/15 01:13:16 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ private:
 	Factory								*_factory;
 	std::vector<IOperand const *>		_stack;
 	eAsmArgs							_asmArg;
-	bool								_dump;
 	bool								_exit;
 };
 
