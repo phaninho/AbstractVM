@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 17:39:09 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:57:16 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,6 @@ public:
 			throw std::runtime_error("Division by 0 not possible !");
 		rsl = left / left;
 
-		// std::cout << "le rsl dans divi " << left << " " << right << " " << rsl << std::endl;
-
 		fc = limit.at(type);
 		(*this.*fc)(rsl);
 		ss << left / right;
@@ -138,8 +136,8 @@ public:
 		std::stringstream	ss;
 		eOperandType type = _type >= rhs.getType() ? _type : rhs.getType();
 
-		if (left == 0)
-			throw std::runtime_error("Division by 0 not possible !");
+		if (right == 0)
+			throw std::runtime_error("Modulo by 0 not possible !");
 		else if (_type == Float || rhs.getType() == Float || _type == Double || rhs.getType() == Double )
 			throw std::runtime_error("Modulo use an invalid type !");
 
@@ -183,15 +181,13 @@ public:
 
 	void	limitFloat(double rsl) const
 	{
-		std::cout << rsl << std::endl;
 		if (rsl != 0 && (rsl > std::numeric_limits<float>::max() || rsl < std::numeric_limits<float>::min()))
 			throw std::runtime_error("Float overflow !");
 	}
 
 	void	limitDouble(double rsl) const
 	{
-		std::cout << rsl << std::endl;
-		if (!(rsl <= std::numeric_limits<double>::max() && rsl >= std::numeric_limits<double>::min()))
+		if (rsl != 0 && (rsl > std::numeric_limits<double>::max() && rsl < std::numeric_limits<double>::min()))
 			throw std::runtime_error("Double overflow !");
 	}
 
