@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/10 20:50:04 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/13 20:17:52 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 16:14:05 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ IOperand const * Factory::createFloat( std::string const & value ) const
 	float minf = std::numeric_limits<float>::min();
 	float maxf = std::numeric_limits<float>::max();
 	float flt = std::stof(value);
-	if (flt < minf || flt > maxf)
+	if ((flt < minf || flt > maxf) && flt != 0)
 		throw std::overflow_error("Value is not a Float !");
 	return (new Operand<float>(value, Float, this, flt));
 }
@@ -89,7 +89,7 @@ IOperand const * Factory::createDouble( std::string const & value ) const
 	double mind = std::numeric_limits<double>::min();
 	double maxd = std::numeric_limits<double>::max();
 	double dbl = std::stod(value);
-	if (dbl < mind || dbl > maxd)
+	if ((dbl < mind || dbl > maxd) && dbl != 0)
 		throw std::overflow_error("Value is not a Double !");
 	return (new Operand<double>(value, Double, this, dbl));
 }

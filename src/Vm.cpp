@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 15:41:46 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 17:35:45 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,14 @@
 #include "IOperand.hpp"
 #include "Factory.hpp"
 
-Vm::Vm( void ): _end(0), _factory(new Factory)
-{ }
+Vm::Vm( void ):
+_end(0),
+_factory(new Factory),
+_dump(0),
+_exit(0)
+{
+	(void)_exit;
+}
 
 Vm::Vm( Vm const & src )
 {
@@ -102,21 +108,31 @@ void		Vm::read_args(std::string buf)
 	else if(buf.find("div") == 0)
 	{
 		check_stack();
-		div();
+		divi();
 	}
 	else if(buf.find("mod") == 0)
 	{
 		check_stack();
 		mod();
 	}
+	else if(buf.find("pop") == 0)
+	{
+		check_stack();
+		_stack.pop_back();
+	}
+	else if(buf.find("dump") == 0)
+		_dump = 1;
 	else
 		throw std::invalid_argument("Invalid Argument !");
 }
 
 void		Vm::check_stack()
 {
+	// std::cout<< "stack size " << _stack.size() << std::endl;
 	if (_stack.empty())
 		throw std::runtime_error("Stack is empty !");
+	else if (_stack.size() < 2)
+		throw std::runtime_error("Stack have less than 2 elements !");
 	// for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
 
 }
@@ -209,33 +225,11 @@ void		Vm::checkDecimal(std::string const &value)
 
 void		Vm::castValue(std::string const & nb)
 {
-	if (_type == Int8)
+	if (_type == Int8 || _type == Int16 || _type == Int32 || _type == Float || _type == Double)
 	{
 		_value = nb;
 		_stack.push_back(_factory->createOperand(_type, _value));
 	}
-	else if (_type == Int16)
-	{
-		_value = nb;
-		_stack.push_back(_factory->createOperand(_type, _value));
-	}
-	else if (_type == Int32)
-	{
-		_value = nb;
-		_stack.push_back(_factory->createOperand(_type, _value));
-	}
-	else if (_type == Float)
-	{
-		_value = nb;
-		_stack.push_back(_factory->createOperand(_type, _value));
-	}
-	else if (_type == Double)
-	{
-		_value = nb;
-		_stack.push_back(_factory->createOperand(_type, _value));
-	}
-	// for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
-    // 	// std::cout << ' ' << (*it)->toString() << std::endl;
 }
 
 void		Vm::add()
@@ -259,6 +253,7 @@ void		Vm::sub()
 	right = *(_stack.rbegin());
 	left = *(_stack.rbegin() + 1);
 	rsl = *left - *right;
+
 	_stack.pop_back();
 	_stack.pop_back();
 	_stack.push_back(rsl);
@@ -280,13 +275,14 @@ void		Vm::mul()
 		std::cout << "debug display: " << (*it)->toString() << std::endl;
 }
 
-void		Vm::div()
+void		Vm::divi()
 {
 	IOperand const 		*left, *right, *rsl;
 
 	right = *(_stack.rbegin());
 	left = *(_stack.rbegin() + 1);
 	rsl = *left / *right;
+
 	_stack.pop_back();
 	_stack.pop_back();
 	_stack.push_back(rsl);
@@ -301,6 +297,7 @@ void		Vm::mod()
 	right = *(_stack.rbegin());
 	left = *(_stack.rbegin() + 1);
 	rsl = *left % *right;
+
 	_stack.pop_back();
 	_stack.pop_back();
 	_stack.push_back(rsl);

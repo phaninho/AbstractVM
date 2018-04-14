@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 15:30:55 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 16:00:01 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ public:
 	void								add();
 	void								sub();
 	void								mul();
-	void								div();
+	void								divi();
 	void								mod();
 
 private:
@@ -67,7 +67,8 @@ private:
 	std::string							_value;
 	Factory								*_factory;
 	std::vector<IOperand const *>		_stack;
-
+	bool								_dump;
+	bool								_exit;
 };
 
 
