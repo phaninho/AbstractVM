@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 19:14:12 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 19:58:32 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,12 @@ void		Vm::read_args(std::string buf)
 		check_stack();
 		add();
 	}
-	else if(buf.find("sub") == 0)
+	else if (buf.find("sub") == 0)
 	{
 		check_stack();
 		sub();
 	}
-	else if(buf.find("mul") == 0)
+	else if (buf.find("mul") == 0)
 	{
 		check_stack();
 		mul();
@@ -116,18 +116,20 @@ void		Vm::read_args(std::string buf)
 		check_stack();
 		divi();
 	}
-	else if(buf.find("mod") == 0)
+	else if (buf.find("mod") == 0)
 	{
 		check_stack();
 		mod();
 	}
-	else if(buf.find("pop") == 0)
+	else if (buf.find("pop") == 0)
 	{
 		check_stack();
 		_stack.pop_back();
 	}
-	else if(buf.find("dump") == 0)
+	else if (buf.find("dump") == 0)
 		_dump = 1;
+	else if (buf.find("print") == 0)
+		check_for_print();
 	else if (buf.find(";"))
 		;
 	else
@@ -214,6 +216,22 @@ void		Vm::check_bracket(std::string const & buf, size_t start)
 					checkDecimal(nb);
 				castValue(nb);
 		}
+	}
+}
+
+void		Vm::check_for_print()
+{
+	std::stringstream	ss;
+	int					c;
+
+	std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin();
+	if ((*it)->getType() != Int8)
+		throw std::runtime_error("Not a type char");
+	else
+	{
+		ss << (*it)->toString();
+		ss >> c;
+		std::cout << static_cast<char>(c) << std::endl;
 	}
 }
 
