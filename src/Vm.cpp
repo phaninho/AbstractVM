@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 17:35:45 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 19:14:12 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,16 @@ void		Vm::read_args(std::string buf)
     // revoir la ligne des commentaires et pour le exit
 	if (buf.find(";;") == 0)
 		_end = 1;
-	else if (buf.find(";") == 0)
-		;
 	else if (buf.find("push") == 0)
-		check_operand(buf, PUSH, 3);
+	{
+		_asmArg = PUSH;
+		check_operand(buf, 3);
+	}
+	else if (buf.find("assert") == 0)
+	{
+		_asmArg = ASSERT;
+		check_operand(buf, 5);
+	}
 	else if (buf.find("add") == 0)
 	{
 		check_stack();
@@ -122,6 +128,8 @@ void		Vm::read_args(std::string buf)
 	}
 	else if(buf.find("dump") == 0)
 		_dump = 1;
+	else if (buf.find(";"))
+		;
 	else
 		throw std::invalid_argument("Invalid Argument !");
 }
@@ -137,13 +145,13 @@ void		Vm::check_stack()
 
 }
 
-void		Vm::check_operand(std::string const &buf, eAsmArgs n, size_t start)
+void		Vm::check_operand(std::string const &buf, size_t start)
 {
 	size_t pos;
 
-	if (n == 0 && (pos = buf.find(" ", start)) == start + 1)
+	if ((_asmArg == PUSH || _asmArg == ASSERT) && (pos = buf.find(" ", start)) == start + 1)
 		chooseType(buf, pos + 1);
-	else if (n == 0 && pos != start + 1)
+	else if ((_asmArg == PUSH || _asmArg == ASSERT) && pos != start + 1)
 		throw std::runtime_error("Wrong instruction format !");
 }
 
@@ -228,7 +236,18 @@ void		Vm::castValue(std::string const & nb)
 	if (_type == Int8 || _type == Int16 || _type == Int32 || _type == Float || _type == Double)
 	{
 		_value = nb;
-		_stack.push_back(_factory->createOperand(_type, _value));
+		if (_asmArg == PUSH)
+			_stack.push_back(_factory->createOperand(_type, _value));
+		else if (_asmArg == ASSERT)
+		{
+			_stack.push_back(_factory->createOperand(_type, _value));
+			std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin();
+			std::vector<const IOperand *>::reverse_iterator it2 = _stack.rbegin() + 1;
+
+			if (((*it)->toString() != (*it2)->toString()) || ((*it)->getType() != (*it2)->getType()))
+				throw std::runtime_error("Assert not equal");
+			_stack.pop_back();
+		}
 	}
 }
 

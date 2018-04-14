@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 16:00:01 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/14 18:55:23 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ public:
 	const std::map<std::string, int>	createMap();
 	void								read_args(std::string av);
 	void								check_stack();
-	void								check_operand(std::string const & buf, eAsmArgs n, size_t pos);
+	void								check_operand(std::string const & buf, size_t pos);
 	void								chooseType(std::string const & buf, size_t t);
 	void								check_bracket(std::string const &, size_t start);
 	void								checkInteger(std::string const &value);
@@ -67,6 +67,7 @@ private:
 	std::string							_value;
 	Factory								*_factory;
 	std::vector<IOperand const *>		_stack;
+	eAsmArgs							_asmArg;
 	bool								_dump;
 	bool								_exit;
 };
