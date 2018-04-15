@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/15 03:23:34 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/15 03:26:01 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ void	Vm::run()
     {
     	if (!std::getline(std::cin, buf))
     		break;
-		// if (buf.find(";") > 1000)
-			read_args(buf);
+		read_args(buf);
 	}
 	if (_end && !_exit)
 		throw std::runtime_error("error : Program stop before exit");
@@ -67,9 +66,7 @@ void		Vm::run(char *av)
 	{
 		if (!std::getline(file, buf))
 			break;
-			// std::cout << "find " << buf.find(";") << std::endl;
-		// if (buf.find(";") > 1000)
-			read_args(buf);
+		read_args(buf);
 	}
 	file.close();
 	if ((_end && !_exit) || (!_end && !_exit))
