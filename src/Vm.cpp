@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/15 02:23:35 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/15 03:23:34 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void		Vm::run(char *av)
 	{
 		if (!std::getline(file, buf))
 			break;
-			std::cout << "find " << buf.find(";") << std::endl;
+			// std::cout << "find " << buf.find(";") << std::endl;
 		// if (buf.find(";") > 1000)
 			read_args(buf);
 	}
@@ -93,8 +93,8 @@ void		Vm::read_args(std::string buf)
 
 	if (buf.find(";;") == 0)
 		_end = 1;
-	// else if (!_exit && buf.find(";") )
-	// 	return ;
+	else if (!_exit && buf.find(";") < 100 && buf.find(";") == 0)
+		return ;
 	else if (!_exit && buf.find("push") == 0)
 	{
 		_asmArg = PUSH;
@@ -141,6 +141,8 @@ void		Vm::read_args(std::string buf)
 		check_for_print();
 	else if (buf.find("exit") == 0)
 		_exit = 1;
+	else if (!_exit && buf.find(";") < 100 && buf.find(";") > 2)
+		return ;
 	else
 		throw std::invalid_argument("Invalid Argument !");
 }
