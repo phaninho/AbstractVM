@@ -1,0 +1,9 @@
+push int8(9)
+push int8(9)
+add
+push int16(-1)
+push int8(9)
+push int8(9)
+mul
+
+exit

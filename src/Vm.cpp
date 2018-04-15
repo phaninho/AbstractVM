@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/15 01:21:30 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/15 02:23:35 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	Vm::run()
     {
     	if (!std::getline(std::cin, buf))
     		break;
-		read_args(buf);
+		// if (buf.find(";") > 1000)
+			read_args(buf);
 	}
 	if (_end && !_exit)
 		throw std::runtime_error("error : Program stop before exit");
@@ -64,10 +65,15 @@ void		Vm::run(char *av)
 		throw std::runtime_error("File open failed !");
 	while (file.eof() == false)
 	{
-			std::getline(file, buf);
-			std::cout << buf << std::endl;
+		if (!std::getline(file, buf))
+			break;
+			std::cout << "find " << buf.find(";") << std::endl;
+		// if (buf.find(";") > 1000)
+			read_args(buf);
 	}
 	file.close();
+	if ((_end && !_exit) || (!_end && !_exit))
+		throw std::runtime_error("error : Program stop before exit");
 }
 
 const std::map<std::string, int> 	Vm::createMap()
@@ -84,8 +90,11 @@ const std::map<std::string, int> 	Vm::createMap()
 
 void		Vm::read_args(std::string buf)
 {
+
 	if (buf.find(";;") == 0)
 		_end = 1;
+	// else if (!_exit && buf.find(";") )
+	// 	return ;
 	else if (!_exit && buf.find("push") == 0)
 	{
 		_asmArg = PUSH;
@@ -132,21 +141,16 @@ void		Vm::read_args(std::string buf)
 		check_for_print();
 	else if (buf.find("exit") == 0)
 		_exit = 1;
-	else if (buf.find(";"))
-		;
 	else
 		throw std::invalid_argument("Invalid Argument !");
 }
 
 void		Vm::check_stack()
 {
-	// std::cout<< "stack size " << _stack.size() << std::endl;
 	if (_stack.empty())
 		throw std::runtime_error("Stack is empty !");
 	else if (_stack.size() < 2)
 		throw std::runtime_error("Stack have less than 2 elements !");
-	// for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
-
 }
 
 void		Vm::check_operand(std::string const &buf, size_t start)
@@ -281,8 +285,6 @@ void		Vm::add()
 	_stack.pop_back();
 	_stack.pop_back();
 	_stack.push_back(rsl);
-	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
-		std::cout << "debug display: " << (*it)->toString() << std::endl;
 }
 
 void		Vm::sub()
@@ -296,8 +298,6 @@ void		Vm::sub()
 	_stack.pop_back();
 	_stack.pop_back();
 	_stack.push_back(rsl);
-	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
-		std::cout << "debug display: " << (*it)->toString() << std::endl;
 }
 
 void		Vm::mul()
@@ -310,8 +310,6 @@ void		Vm::mul()
 	_stack.pop_back();
 	_stack.pop_back();
 	_stack.push_back(rsl);
-	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
-		std::cout << "debug display: " << (*it)->toString() << std::endl;
 }
 
 void		Vm::divi()
@@ -325,8 +323,6 @@ void		Vm::divi()
 	_stack.pop_back();
 	_stack.pop_back();
 	_stack.push_back(rsl);
-	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
-		std::cout << "debug display: " << (*it)->toString() << std::endl;
 }
 
 void		Vm::mod()
@@ -340,8 +336,6 @@ void		Vm::mod()
 	_stack.pop_back();
 	_stack.pop_back();
 	_stack.push_back(rsl);
-	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
-		std::cout << "debug display: " << (*it)->toString() << std::endl;
 }
 
 void		Vm::dump_stack()
