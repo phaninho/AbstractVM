@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 16:41:38 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 17:10:02 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,8 +143,8 @@ void		Vm::read_args(std::string buf)
 	}
 	else if (buf.find("exit") == 0 && check_word(buf, 4))
 		_exit = 1;
-	else if (!_exit && buf.find(";") != std::string::npos && buf.find(";") > 2)
-		return ;
+	// else if (!_exit && buf.find(";") != std::string::npos && buf.find(";") > 2)
+		// return ;
 	else if (!_exit)
 		throw std::invalid_argument("Invalid Argument !");
 }
@@ -158,9 +158,12 @@ bool		Vm::check_word(std::string buf,size_t s)
 
 void		Vm::check_stack()
 {
+	size_t s;
+
+	s = ((_asmArg == PRINT || _asmArg == ASSERT) ? 1 : 2);
 	if (_stack.empty())
 		throw std::runtime_error("Stack is empty !");
-	else if (_stack.size() < (_asmArg == PRINT ? 1 : 2))
+	else if (_stack.size() < s)
 		throw std::runtime_error("Stack have less than 2 elements !");
 }
 
