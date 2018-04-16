@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 20:22:54 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 21:47:14 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,17 +135,17 @@ public:
 		eOperandType type = _type >= rhs.getType() ? _type : rhs.getType();
 
 		if (right == 0)
-			throw std::runtime_error("Modulo by 0 not possible !");
+			throw std::runtime_error("\033[1;34mModulo by 0 not possible !\033[0m");
 		else if (_type == Float || rhs.getType() == Float || _type == Double || rhs.getType() == Double )
-			throw std::runtime_error("Modulo use an invalid type !");
+			throw std::runtime_error("\033[1;34mModulo use an invalid type !\033[0m");
 
 		rsl = left % right;
 		if (rsl > std::numeric_limits<char>::max() || rsl < std::numeric_limits<char>::min())
-			throw std::runtime_error("Int8 overflow !");
+			throw std::runtime_error("\033[1;36mInt8 overflow !\033[0m");
 		else if (rsl > std::numeric_limits<short int>::max() || rsl < std::numeric_limits<short int>::min())
-			throw std::runtime_error("Int16 overflow !");
+			throw std::runtime_error("\033[1;36mInt16 overflow !\033[0m");
 		else if (rsl > std::numeric_limits<int>::max() || rsl < std::numeric_limits<int>::min())
-			throw std::runtime_error("Int32 overflow !");
+			throw std::runtime_error("\033[1;36mInt32 overflow !\033[0m");
 		ss << left % right;
 		return _factory->createOperand(type, ss.str());
 	}
@@ -162,31 +162,31 @@ public:
 	void	limitInt8(double rsl) const
 	{
 		if (rsl > std::numeric_limits<char>::max() || rsl < std::numeric_limits<char>::min())
-			throw std::runtime_error("Int8 overflow !");
+			throw std::runtime_error("\033[1;36mInt8 overflow !\033[0m");
 	}
 
 	void	limitInt16(double rsl) const
 	{
 		if (rsl > std::numeric_limits<short int>::max() || rsl < std::numeric_limits<short int>::min())
-			throw std::runtime_error("Int16 overflow !");
+			throw std::runtime_error("\033[1;36mInt16 overflow !\033[0m");
 	}
 
 	void	limitInt32(double rsl) const
 	{
 		if (rsl > std::numeric_limits<int>::max() || rsl < std::numeric_limits<int>::min())
-			throw std::runtime_error("Int32 overflow !");
+			throw std::runtime_error("\033[1;36mInt32 overflow !\033[0m");
 	}
 
 	void	limitFloat(double rsl) const
 	{
 		if (rsl != 0 && (rsl > std::numeric_limits<float>::max() || rsl < -std::numeric_limits<float>::max()))
-			throw std::runtime_error("Float overflow !");
+			throw std::runtime_error("\033[1;36mFloat overflow !\033[0m");
 	}
 
 	void	limitDouble(double rsl) const
 	{
 		if (rsl != 0 && (rsl > std::numeric_limits<double>::max() && rsl < -std::numeric_limits<double>::max()))
-			throw std::runtime_error("Double overflow !");
+			throw std::runtime_error("\033[1;36mDouble overflow !\033[0m");
 	}
 
 private:

@@ -3,7 +3,7 @@ push float(-13.8916)
 dump
 mul
 ;divISION BY 0 (OR NOT)
-push int8()
+push int8(5342523)
 push float(0.000i000000001)
 div
 ;int MIN - float MIN
@@ -26,6 +26,8 @@ push double(+4242.42e-2)
 push double(10)
 add
 ;rev div
+min
+max
 dump
 ;dump
 ;ERROR PART

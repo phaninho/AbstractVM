@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 13:46:32 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 21:20:36 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 21:50:22 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ int		main(int ac, char **av)
 	{
 		while (++i < ac)
 		{
-			std::cout << "\033[1;32mbold Execute "<< av[i] << " :\033[0m" << std::endl;
+			std::cout << "\033[1;32m=======================================\033[0m" << std::endl;
+			std::cout << "\033[1;32mExecute "<< av[i] << " :\033[0m" << std::endl;
 			vm.run(av[i]);
 			vm.setVm();
 		}
@@ -40,3 +41,5 @@ int		main(int ac, char **av)
 //multi files
 //couleurs
 //verif complete
+//min
+//max

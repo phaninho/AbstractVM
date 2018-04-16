@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 20:14:20 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 21:32:25 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ enum eAsmArgs
 	DIV,
 	MOD,
 	PRINT,
+	MIN,
+	MAX,
 	EXIT
 };
 
@@ -63,6 +65,8 @@ public:
 	void								divi();
 	void								mod();
 	void								dump_stack();
+	void								min();
+	void								max();
 	void								setVm();
 
 private:
