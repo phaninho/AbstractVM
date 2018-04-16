@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 17:51:12 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 17:56:44 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ bool		Vm::check_word(std::string buf,size_t s)
 		return 1;
 	else if ((_asmArg == PUSH || _asmArg == ASSERT) && ((buf.find(" ", s - 1) != std::string::npos)))
 		return 1;
-	std::cout <<"s " << s << " space " << buf.find(" ", s) << std::endl;
 
 	return 0;
 }
