@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 17:10:02 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 17:51:12 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void		Vm::read_args(std::string buf)
 
 	if (buf.find(";;") == 0)
 		_end = 1;
-	else if (buf.find(";") != std::string::npos && buf.find(";") == 0)
+	else if (!_end && buf.find(";") != std::string::npos && buf.find(";") == 0)
 		return ;
 	else if (!_exit && buf.find("push") == 0)
 	{
@@ -151,8 +151,12 @@ void		Vm::read_args(std::string buf)
 
 bool		Vm::check_word(std::string buf,size_t s)
 {
-	if (buf.length() == s || (buf.find(";") == s && buf.find(";") != std::string::npos))
+	if ((buf.length() == s || (buf.find(";") == s && buf.find(";") != std::string::npos) || (buf.find(" ") == s && buf.find(" ") != std::string::npos && (buf.find(";") == s + 1 && buf.find(";") != std::string::npos))))
 		return 1;
+	else if ((_asmArg == PUSH || _asmArg == ASSERT) && ((buf.find(" ", s - 1) != std::string::npos)))
+		return 1;
+	std::cout <<"s " << s << " space " << buf.find(" ", s) << std::endl;
+
 	return 0;
 }
 
@@ -227,7 +231,10 @@ void		Vm::check_bracket(std::string const & buf, size_t start)
 		if ((clBr = buf.find(")", start)) < opBr || buf.find(")", start) == std::string::npos)
 			throw BracketException("No closing Brackets match !");
 		else if (!check_word(buf, clBr + 1))
+		{
+			std::cout << "len " << clBr <<std::endl;
 			throw std::runtime_error("Wrong instruction after closing bracket !");
+		}
 		else
 		{
 				len = (clBr - opBr) - 1;
