@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 13:46:32 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 21:05:23 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 21:20:36 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,3 +33,10 @@ int		main(int ac, char **av)
 		}
 	}
 }
+
+
+//Bonus
+//ecriture scientifique
+//multi files
+//couleurs
+//verif complete
