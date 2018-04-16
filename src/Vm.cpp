@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 20:52:52 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 21:16:52 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	Vm::run()
 	try
 	{
 		if ((_end && !_exit) || (!_end && !_exit))
-			throw std::runtime_error("error : Program stop before exit");
+			throw std::runtime_error("\033[1;31mbold error : Program stop before exit !\033[0m");
 	}
 	catch (std::runtime_error & e)
 	{
@@ -79,9 +79,9 @@ void		Vm::run(char *av)
 
 	file.open(av);
 	if (!file)
-		throw std::invalid_argument("Wrong file name !");
+		throw std::invalid_argument("\033[1;31mbold Wrong file name !\033[0m");
 	else if (file.is_open() == false)
-		throw std::runtime_error("File open failed !");
+		throw std::runtime_error("\033[1;31mbold File open failed !\033[0m");
 	while (file.eof() == false)
 	{
 		try
@@ -103,7 +103,7 @@ void		Vm::run(char *av)
 	try
 	{
 		if ((_end && !_exit) || (!_end && !_exit))
-			throw std::runtime_error("error : Program stop before exit");
+			throw std::runtime_error("\033[1;31mbold error : Program stop before exit");
 	}
 	catch (std::runtime_error & e)
 	{
@@ -182,10 +182,8 @@ void		Vm::read_args(std::string buf)
 	}
 	else if (buf.find("exit") == 0 && check_word(buf, 4))
 		_exit = 1;
-	// else if (!_exit && buf.find(";") != std::string::npos && buf.find(";") > 2)
-		// return ;
 	else if (!_exit)
-		throw std::invalid_argument("Invalid Argument !");
+		throw std::invalid_argument("\033[1;31mbold Invalid Argument !\033[0m");
 }
 
 bool		Vm::check_word(std::string buf,size_t s)
@@ -201,11 +199,11 @@ bool		Vm::check_word(std::string buf,size_t s)
 void		Vm::check_stack()
 {
 	size_t s = ((_asmArg == PRINT || _asmArg == ASSERT || _asmArg == POP) ? 1 : 2);
-	
+
 	if (_stack.empty())
-		throw std::runtime_error("Stack is empty !");
+		throw std::runtime_error("\033[1;31mbold Stack is empty !\033[0m");
 	else if (_stack.size() < s)
-		throw std::runtime_error("Stack have less than 2 elements !");
+		throw std::runtime_error("\033[1;31mbold Stack have less than 2 elements !\033[0m");
 }
 
 void		Vm::check_operand(std::string const &buf, size_t start)
@@ -215,7 +213,7 @@ void		Vm::check_operand(std::string const &buf, size_t start)
 	if ((_asmArg == PUSH || _asmArg == ASSERT) && (pos = buf.find(" ", start)) == start + 1)
 		chooseType(buf, pos + 1);
 	else if ((_asmArg == PUSH || _asmArg == ASSERT) && pos != start + 1)
-		throw std::runtime_error("Wrong instruction format !");
+		throw std::runtime_error("\033[1;31mbold Wrong instruction format !\033[0m");
 }
 
 void		Vm::chooseType(std::string const & buf, size_t start)
@@ -252,7 +250,7 @@ void		Vm::chooseType(std::string const & buf, size_t start)
 		start += 6;
 	}
 	else if (buf.find("\0", start) == start)
-		throw std::runtime_error("Wrong instruction format !");
+		throw std::runtime_error("\033[1;31mbold Wrong instruction format !\033[0m");
 	check_bracket(buf, start);
 }
 
@@ -266,11 +264,11 @@ void		Vm::check_bracket(std::string const & buf, size_t start)
 	if ((opBr = buf.find("(", start)) == start)
 	{
 		if ((clBr = buf.find(")", start)) < opBr || buf.find(")", start) == std::string::npos)
-			throw BracketException("No closing Brackets match !");
+			throw BracketException("\033[1;31mbold No closing Brackets match !\033[0m");
 		else if (!check_word(buf, clBr + 1))
 		{
 			std::cout << "len " << clBr <<std::endl;
-			throw std::runtime_error("Wrong instruction after closing bracket !");
+			throw std::runtime_error("\033[1;31mbold Wrong instruction after closing bracket !\033[0m");
 		}
 		else
 		{
@@ -292,7 +290,7 @@ void		Vm::check_for_print()
 
 	std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin();
 	if ((*it)->getType() != Int8)
-		throw std::runtime_error("Not a type char");
+		throw std::runtime_error("\033[1;31mbold Not a type char\033[0m");
 	else
 	{
 		ss << (*it)->toString();
@@ -305,14 +303,14 @@ void		Vm::checkInteger(std::string const &value)
 {
 	if (value == "+" || value == "-"
 || !std::regex_match(value, std::regex("^[+\\-]?(?:0|[1-9]\\d*)?$")))
-		throw LexicalSyntacticException("Syntactic exception (Value is not an integer)");
+		throw LexicalSyntacticException("\033[1;35mbold Syntactic exception (Value is not an integer)\033[0m");
 }
 
 void		Vm::checkDecimal(std::string const &value)
 {
 	if (value == "+" || value == "-" || value == "+." || value == "-." || value == "."
 	|| !std::regex_match(value, std::regex("^[+\\-]?(?:|0|[1-9]\\d*)(?:\\.\\d*)?(?:[eE][+\\-]?\\d+)?$")))
-		throw LexicalSyntacticException("Syntactic exception (Value is not a decimal number)");
+		throw LexicalSyntacticException("\033[1;35mbold Syntactic exception (Value is not a decimal number)\033[0m");
 }
 
 void		Vm::castValue(std::string const & nb)
@@ -329,7 +327,7 @@ void		Vm::castValue(std::string const & nb)
 			std::vector<const IOperand *>::reverse_iterator it2 = _stack.rbegin() + 1;
 
 			if (((*it)->toString() != (*it2)->toString()) || ((*it)->getType() != (*it2)->getType()))
-				throw std::runtime_error("Assert not equal");
+				throw std::runtime_error("\033[1;31mbold Assert not equal\033[0m");
 			_stack.pop_back();
 		}
 	}
@@ -401,7 +399,7 @@ void		Vm::mod()
 void		Vm::dump_stack()
 {
 	if (_stack.size() < 1)
-		throw std::runtime_error("Can't dump, Stack is empty");
+		throw std::runtime_error("\033[1;31mbold Can't dump, Stack is empty \033[0m");
 	else
 	{
 		for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)

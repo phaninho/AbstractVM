@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 13:46:32 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 20:49:29 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 21:05:23 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,22 +21,15 @@ int		main(int ac, char **av)
 	Vm vm;
 	Map map = vm.createMap();
 
-	// try
-	// {
-		if (ac == 1)
-			vm.run();
-		else if (ac > 1)
+	if (ac == 1)
+		vm.run();
+	else if (ac > 1)
+	{
+		while (++i < ac)
 		{
-			while (++i < ac)
-			{
-				std::cout << "Execute "<< av[i] << " :" << std::endl;
-				vm.run(av[i]);
-				vm.setVm();
-			}
+			std::cout << "\033[1;32mbold Execute "<< av[i] << " :\033[0m" << std::endl;
+			vm.run(av[i]);
+			vm.setVm();
 		}
-	// }
-	// catch (std::runtime_error & e)
-	// {
-	// 	std::cout << e.what() << std::endl;
-	// }
+	}
 }

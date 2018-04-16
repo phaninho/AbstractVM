@@ -4,7 +4,7 @@ dump
 mul
 ;divISION BY 0 (OR NOT)
 push int8()
-push float(0.000000000001)
+push float(0.000i000000001)
 div
 ;int MIN - float MIN
 push int32(-2147483648)
