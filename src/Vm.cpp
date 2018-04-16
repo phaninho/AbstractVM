@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 17:56:44 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 20:18:49 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ Vm::Vm( Vm const & src )
 }
 
 Vm::~Vm()
-{ }
+{
+	delete _factory;
+}
 
 Vm 			&Vm::operator=( Vm const & rhs )
 {
@@ -43,9 +45,20 @@ void	Vm::run()
 
     while (!_end)
     {
-    	if (!std::getline(std::cin, buf))
-    		break;
-		read_args(buf);
+		try
+		{
+	    	if (!std::getline(std::cin, buf))
+	    		break;
+			read_args(buf);
+		}
+		catch (std::runtime_error & e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+		catch (std::exception & e)
+		{
+			std::cout << e.what() << std::endl;
+		}
 	}
 	if (_end && !_exit)
 		throw std::runtime_error("error : Program stop before exit");
@@ -64,9 +77,20 @@ void		Vm::run(char *av)
 		throw std::runtime_error("File open failed !");
 	while (file.eof() == false)
 	{
-		if (!std::getline(file, buf))
-			break;
-		read_args(buf);
+		try
+		{
+			if (!std::getline(file, buf))
+				break;
+			read_args(buf);
+		}
+		catch (std::runtime_error & e)
+		{
+			std::cout << e.what() << std::endl;
+		}
+		catch (std::exception & e)
+		{
+			std::cout << e.what() << std::endl;
+		}
 	}
 	file.close();
 	if ((_end && !_exit) || (!_end && !_exit))
@@ -369,4 +393,11 @@ void		Vm::dump_stack()
 		for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
 			std::cout << (*it)->toString() << std::endl;
 	}
+}
+
+void		Vm::setVm()
+{
+	_end = 0;
+	_exit = 0;
+	_stack.clear();
 }
