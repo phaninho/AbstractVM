@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 20:18:49 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 20:52:52 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,15 @@ void	Vm::run()
 			std::cout << e.what() << std::endl;
 		}
 	}
-	if (_end && !_exit)
-		throw std::runtime_error("error : Program stop before exit");
+	try
+	{
+		if ((_end && !_exit) || (!_end && !_exit))
+			throw std::runtime_error("error : Program stop before exit");
+	}
+	catch (std::runtime_error & e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 }
 
 
@@ -93,8 +100,15 @@ void		Vm::run(char *av)
 		}
 	}
 	file.close();
-	if ((_end && !_exit) || (!_end && !_exit))
-		throw std::runtime_error("error : Program stop before exit");
+	try
+	{
+		if ((_end && !_exit) || (!_end && !_exit))
+			throw std::runtime_error("error : Program stop before exit");
+	}
+	catch (std::runtime_error & e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 }
 
 const std::map<std::string, int> 	Vm::createMap()
@@ -156,6 +170,7 @@ void		Vm::read_args(std::string buf)
 	}
 	else if (!_exit && buf.find("pop") == 0 && check_word(buf, 3))
 	{
+		_asmArg = POP;
 		check_stack();
 		_stack.pop_back();
 	}
@@ -185,9 +200,8 @@ bool		Vm::check_word(std::string buf,size_t s)
 
 void		Vm::check_stack()
 {
-	size_t s;
-
-	s = ((_asmArg == PRINT || _asmArg == ASSERT) ? 1 : 2);
+	size_t s = ((_asmArg == PRINT || _asmArg == ASSERT || _asmArg == POP) ? 1 : 2);
+	
 	if (_stack.empty())
 		throw std::runtime_error("Stack is empty !");
 	else if (_stack.size() < s)

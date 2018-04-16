@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 18:54:33 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 20:22:54 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ public:
 		limit[Int32] = &Operand::limitInt32;
 		limit[Float] = &Operand::limitFloat;
 		limit[Double] = &Operand::limitDouble;
-		// (void)_factory;
-		// std::cout << "on creer operand " << value << " a une valeur type de " << _type << " nb = " << nb << std::endl;
 	}
 
 	Operand( Operand const & src);

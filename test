@@ -51,5 +51,5 @@ dump
 ;push double(2.2)
 ;Mod
 ;print
-exit
-push double( 3.14 )
+;exit
+;push double( 3.14 )
