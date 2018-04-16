@@ -28,6 +28,7 @@ add
 ;rev div
 min
 max
+avg
 dump
 ;dump
 ;ERROR PART

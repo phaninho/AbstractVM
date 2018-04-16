@@ -15,6 +15,7 @@ sub
 dump
 min
 max
+avg
 exit
 fdsf
 fsdf

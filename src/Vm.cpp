@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 21:48:51 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 21:57:15 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,12 @@ void		Vm::read_args(std::string buf)
 		check_stack();
 		max();
 	}
+	else if (!_exit && buf.find("avg") == 0 && check_word(buf, 3))
+	{
+		_asmArg = AVG;
+		check_stack();
+		avg();
+	}
 	else if (buf.find("exit") == 0 && check_word(buf, 4))
 		_exit = 1;
 	else if (!_exit)
@@ -210,7 +216,7 @@ bool		Vm::check_word(std::string buf,size_t s)
 
 void		Vm::check_stack()
 {
-	size_t s = ((_asmArg == PRINT || _asmArg == ASSERT || _asmArg == POP || _asmArg == MIN || _asmArg == MAX) ? 1 : 2);
+	size_t s = ((_asmArg == PRINT || _asmArg == ASSERT || _asmArg == POP || _asmArg == MIN || _asmArg == MAX || _asmArg == AVG) ? 1 : 2);
 
 	if (_stack.empty())
 		throw std::runtime_error("\033[1;31mStack is empty !\033[0m");
@@ -441,6 +447,23 @@ void		Vm::max()
 			max = rsl;
 	}
 	std::cout << "\033[1;33mmax : " << max << "\033[0m" << std::endl;
+}
+
+void		Vm::avg()
+{
+	double avg = 0;
+	size_t i = 0;
+	double rsl = 0;
+
+	for (std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin() ; it != _stack.rend(); ++it)
+	{
+		rsl += std::stod((*it)->toString());
+		i++;
+	}
+	if (i)
+		avg = rsl / i;
+	std::cout << "\033[1;35mavg : " << avg << "\033[0m" << std::endl;
+
 }
 
 void		Vm::setVm()

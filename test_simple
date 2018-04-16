@@ -1,0 +1,9 @@
+push int32(5)
+push int32(10)
+push int32(15)
+push int32(20)
+dump
+min
+max
+avg
+exit

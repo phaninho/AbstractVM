@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 21:32:25 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 21:51:55 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ enum eAsmArgs
 	PRINT,
 	MIN,
 	MAX,
+	AVG,
 	EXIT
 };
 
@@ -67,6 +68,7 @@ public:
 	void								dump_stack();
 	void								min();
 	void								max();
+	void								avg();
 	void								setVm();
 
 private:
