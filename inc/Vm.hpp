@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:57:06 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/15 01:13:16 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 16:26:24 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ public:
 	void								run(char *av);
 	const std::map<std::string, int>	createMap();
 	void								read_args(std::string av);
+	bool								check_word(std::string buf,size_t s);
 	void								check_stack();
 	void								check_operand(std::string const & buf, size_t pos);
 	void								chooseType(std::string const & buf, size_t t);

@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/15 03:26:01 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 16:41:38 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void		Vm::read_args(std::string buf)
 
 	if (buf.find(";;") == 0)
 		_end = 1;
-	else if (!_exit && buf.find(";") < 100 && buf.find(";") == 0)
+	else if (buf.find(";") != std::string::npos && buf.find(";") == 0)
 		return ;
 	else if (!_exit && buf.find("push") == 0)
 	{
@@ -100,55 +100,67 @@ void		Vm::read_args(std::string buf)
 	else if (!_exit && buf.find("assert") == 0)
 	{
 		_asmArg = ASSERT;
+		check_stack();
 		check_operand(buf, 5);
 	}
-	else if (!_exit && buf.find("dump") == 0)
+	else if (!_exit && buf.find("dump") == 0 && check_word(buf, 4))
 		dump_stack();
-	else if (!_exit && buf.find("add") == 0)
+	else if (!_exit && buf.find("add") == 0 && check_word(buf, 3))
 	{
 		check_stack();
 		add();
 	}
-	else if (!_exit && buf.find("sub") == 0)
+	else if (!_exit && buf.find("sub") == 0 && check_word(buf, 3))
 	{
 		check_stack();
 		sub();
 	}
-	else if (!_exit && buf.find("mul") == 0)
+	else if (!_exit && buf.find("mul") == 0 && check_word(buf, 3))
 	{
 		check_stack();
 		mul();
 	}
-	else if(!_exit && buf.find("div") == 0)
+	else if(!_exit && buf.find("div") == 0 && check_word(buf, 3))
 	{
 		check_stack();
 		divi();
 	}
-	else if (!_exit && buf.find("mod") == 0)
+	else if (!_exit && buf.find("mod") == 0 && check_word(buf, 3))
 	{
 		check_stack();
 		mod();
 	}
-	else if (!_exit && buf.find("pop") == 0)
+	else if (!_exit && buf.find("pop") == 0 && check_word(buf, 3))
 	{
 		check_stack();
 		_stack.pop_back();
 	}
-	else if (!_exit && buf.find("print") == 0)
+	else if (!_exit && buf.find("print") == 0 && check_word(buf, 5))
+	{
+		_asmArg = PRINT;
+		check_stack();
 		check_for_print();
-	else if (buf.find("exit") == 0)
+	}
+	else if (buf.find("exit") == 0 && check_word(buf, 4))
 		_exit = 1;
-	else if (!_exit && buf.find(";") < 100 && buf.find(";") > 2)
+	else if (!_exit && buf.find(";") != std::string::npos && buf.find(";") > 2)
 		return ;
-	else
+	else if (!_exit)
 		throw std::invalid_argument("Invalid Argument !");
+}
+
+bool		Vm::check_word(std::string buf,size_t s)
+{
+	if (buf.length() == s || (buf.find(";") == s && buf.find(";") != std::string::npos))
+		return 1;
+	return 0;
 }
 
 void		Vm::check_stack()
 {
 	if (_stack.empty())
 		throw std::runtime_error("Stack is empty !");
-	else if (_stack.size() < 2)
+	else if (_stack.size() < (_asmArg == PRINT ? 1 : 2))
 		throw std::runtime_error("Stack have less than 2 elements !");
 }
 
@@ -209,8 +221,10 @@ void		Vm::check_bracket(std::string const & buf, size_t start)
 
 	if ((opBr = buf.find("(", start)) == start)
 	{
-		if ((clBr = buf.find(")", start)) < opBr || buf.find(")", start) > 1000)
+		if ((clBr = buf.find(")", start)) < opBr || buf.find(")", start) == std::string::npos)
 			throw BracketException("No closing Brackets match !");
+		else if (!check_word(buf, clBr + 1))
+			throw std::runtime_error("Wrong instruction after closing bracket !");
 		else
 		{
 				len = (clBr - opBr) - 1;

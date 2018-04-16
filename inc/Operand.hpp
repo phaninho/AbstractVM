@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/07 15:23:19 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/14 18:25:47 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/16 15:05:00 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,13 +181,14 @@ public:
 
 	void	limitFloat(double rsl) const
 	{
-		if (rsl != 0 && (rsl > std::numeric_limits<float>::max() || rsl < std::numeric_limits<float>::min()))
+		std::cout << "rsl " << rsl << std::endl;
+		if (rsl != 0 && (rsl > std::numeric_limits<float>::max() || rsl < -std::numeric_limits<float>::max()))
 			throw std::runtime_error("Float overflow !");
 	}
 
 	void	limitDouble(double rsl) const
 	{
-		if (rsl != 0 && (rsl > std::numeric_limits<double>::max() && rsl < std::numeric_limits<double>::min()))
+		if (rsl != 0 && (rsl > std::numeric_limits<double>::max() && rsl < -std::numeric_limits<double>::max()))
 			throw std::runtime_error("Double overflow !");
 	}
 
