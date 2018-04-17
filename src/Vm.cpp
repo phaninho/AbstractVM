@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/16 21:57:15 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/17 14:18:17 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,10 +343,11 @@ void		Vm::castValue(std::string const & nb)
 			_stack.push_back(_factory->createOperand(_type, _value));
 			std::vector<const IOperand *>::reverse_iterator it = _stack.rbegin();
 			std::vector<const IOperand *>::reverse_iterator it2 = _stack.rbegin() + 1;
-
 			if (((*it)->toString() != (*it2)->toString()) || ((*it)->getType() != (*it2)->getType()))
+			{
+				_stack.pop_back();
 				throw std::runtime_error("\033[1;31mAssert not equal\033[0m");
-			_stack.pop_back();
+			}
 		}
 	}
 }
