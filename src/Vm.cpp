@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/17 14:18:17 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/17 14:20:55 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,6 +348,7 @@ void		Vm::castValue(std::string const & nb)
 				_stack.pop_back();
 				throw std::runtime_error("\033[1;31mAssert not equal\033[0m");
 			}
+			_stack.pop_back();
 		}
 	}
 }
