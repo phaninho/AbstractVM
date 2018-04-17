@@ -6,7 +6,7 @@
 /*   By: stmartin <stmartin@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/09 17:59:38 by stmartin          #+#    #+#             */
-/*   Updated: 2018/04/17 14:20:55 by stmartin         ###   ########.fr       */
+/*   Updated: 2018/04/17 14:44:39 by stmartin         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,21 @@ void		Vm::run(char *av)
 	std::string buf;
 
 	file.open(av);
-	if (!file)
-		throw std::invalid_argument("\033[1;31m Wrong file name !\033[0m");
-	else if (file.is_open() == false)
-		throw std::runtime_error("\033[1;31m File open failed !\033[0m");
+	try
+	{
+		if (!file)
+			throw std::invalid_argument("\033[1;31m Wrong file name !\033[0m");
+		else if (file.is_open() == false)
+			throw std::runtime_error("\033[1;31m File open failed !\033[0m");
+	}
+	catch (std::runtime_error & e)
+	{
+		std::cout << e.what() << std::endl;
+	}
+	catch (std::invalid_argument & e)
+	{
+		std::cout << e.what() << std::endl;
+	}
 	while (file.eof() == false)
 	{
 		try
